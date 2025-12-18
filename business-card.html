@@ -26,8 +26,9 @@
         }
 
         .business-card {
-            width: 550px;
-            height: 320px;
+            width: 100%;
+            max-width: 550px;
+            min-height: 320px;
             background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             border-radius: 16px;
             padding: 40px;
@@ -57,8 +58,77 @@
 
         .card-content {
             display: flex;
+            flex-direction: row;
             height: 100%;
             gap: 20px;
+        }
+
+        /* Responsive Design pour Mobile */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .business-card {
+                padding: 25px;
+                min-height: auto;
+            }
+
+            .card-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .photo-section {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+            .info-section {
+                width: 100%;
+                text-align: center;
+            }
+
+            .name {
+                font-size: 24px;
+            }
+
+            .title {
+                font-size: 14px;
+            }
+
+            .contact-item {
+                justify-content: center;
+                font-size: 14px;
+            }
+
+            .add-contact-btn {
+                align-self: center;
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .instructions {
+                font-size: 12px;
+                padding: 0 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .business-card {
+                padding: 20px;
+            }
+
+            .name {
+                font-size: 20px;
+            }
+
+            .photo-container {
+                width: 100px;
+                height: 100px;
+            }
         }
 
         .photo-section {
@@ -295,9 +365,14 @@
     <script>
         let photoData = '';
         let isEditMode = false;
-        
+
         // MOT DE PASSE ADMINISTRATEUR - Changez ceci par votre propre mot de passe sécurisé
         const ADMIN_PASSWORD = 'admin123';
+
+        // Charger les données sauvegardées au démarrage
+        window.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+        });
 
         function toggleEditMode() {
             // Si on essaie d'entrer en mode édition, demander le mot de passe
@@ -324,7 +399,7 @@
 
             const btn = document.querySelector('.edit-btn');
             btn.textContent = isEditMode ? '✓ Terminé' : '✏️ Modifier';
-            
+
             // Désactiver le téléchargement de photo pour les visiteurs
             const photoContainer = document.querySelector('.photo-container');
             if (isEditMode) {
@@ -335,6 +410,8 @@
             } else {
                 photoContainer.style.cursor = 'default';
                 photoContainer.onclick = null;
+                // Sauvegarder les données quand on quitte le mode édition
+                saveData();
             }
         }
 
@@ -346,10 +423,15 @@
                     photoData = e.target.result;
                     const img = document.getElementById('photoImg');
                     const placeholder = document.getElementById('photoPlaceholder');
-                    
+
                     img.src = photoData;
                     img.style.display = 'block';
                     placeholder.style.display = 'none';
+
+                    // Sauvegarder automatiquement après le téléchargement de la photo
+                    if (isEditMode) {
+                        saveData();
+                    }
                 };
                 reader.readAsDataURL(file);
             }
@@ -391,6 +473,58 @@
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
         }
+
+        // Fonction pour sauvegarder les données dans localStorage
+        function saveData() {
+            const data = {
+                name: document.getElementById('name').textContent,
+                title: document.getElementById('title').textContent,
+                email: document.getElementById('email').textContent,
+                phone: document.getElementById('phone').textContent,
+                address: document.getElementById('address').textContent,
+                photo: photoData
+            };
+
+            try {
+                localStorage.setItem('businessCardData', JSON.stringify(data));
+                console.log('Données sauvegardées avec succès');
+            } catch (e) {
+                console.error('Erreur lors de la sauvegarde:', e);
+                alert('Erreur lors de la sauvegarde des données');
+            }
+        }
+
+        // Fonction pour charger les données depuis localStorage
+        function loadSavedData() {
+            try {
+                const savedData = localStorage.getItem('businessCardData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+
+                    // Charger les informations textuelles
+                    if (data.name) document.getElementById('name').textContent = data.name;
+                    if (data.title) document.getElementById('title').textContent = data.title;
+                    if (data.email) document.getElementById('email').textContent = data.email;
+                    if (data.phone) document.getElementById('phone').textContent = data.phone;
+                    if (data.address) document.getElementById('address').textContent = data.address;
+
+                    // Charger la photo si elle existe
+                    if (data.photo) {
+                        photoData = data.photo;
+                        const img = document.getElementById('photoImg');
+                        const placeholder = document.getElementById('photoPlaceholder');
+                        img.src = photoData;
+                        img.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    }
+
+                    console.log('Données chargées avec succès');
+                }
+            } catch (e) {
+                console.error('Erreur lors du chargement:', e);
+            }
+        }
+
     </script>
 </body>
 </html>
