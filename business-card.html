@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Business Card</title>
+    <title>Carte de Visite Professionnelle</title>
     <style>
         * {
             margin: 0;
@@ -224,22 +224,22 @@
 </head>
 <body>
     <div class="card-container">
-        <!-- 
-        ADMINISTRATOR INSTRUCTIONS:
-        To change the password, open this file in a text editor and find the line:
+        <!--
+        INSTRUCTIONS ADMINISTRATEUR :
+        Pour changer le mot de passe, ouvrez ce fichier dans un éditeur de texte et trouvez la ligne :
         const ADMIN_PASSWORD = 'admin123';
-        Replace 'admin123' with your own secure password.
+        Remplacez 'admin123' par votre propre mot de passe sécurisé.
         -->
         <div class="business-card">
             <div class="edit-mode">
-                <button class="edit-btn" onclick="toggleEditMode()">✏️ Edit</button>
+                <button class="edit-btn" onclick="toggleEditMode()">✏️ Modifier</button>
             </div>
 
             <div class="card-content">
                 <div class="photo-section">
                     <div class="photo-container" style="cursor: default;">
                         <div class="photo-placeholder" id="photoPlaceholder">
-                            Click to add photo
+                            Cliquez pour ajouter une photo
                         </div>
                         <img id="photoImg" style="display: none;" />
                     </div>
@@ -249,8 +249,8 @@
                 <div class="info-section">
                     <div>
                         <div class="name-title">
-                            <div class="name editable" contenteditable="false" id="name">John Doe</div>
-                            <div class="title editable" contenteditable="false" id="title">Professional Title</div>
+                            <div class="name editable" contenteditable="false" id="name">Nom Prénom</div>
+                            <div class="title editable" contenteditable="false" id="title">Titre Professionnel</div>
                         </div>
 
                         <div class="contact-info">
@@ -272,7 +272,7 @@
                                 <svg viewBox="0 0 24 24">
                                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                                 </svg>
-                                <span class="editable" contenteditable="false" id="address">City, Country</span>
+                                <span class="editable" contenteditable="false" id="address">Ville, Pays</span>
                             </div>
                         </div>
                     </div>
@@ -281,14 +281,14 @@
                         <svg viewBox="0 0 24 24">
                             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                         </svg>
-                        Add to Contacts
+                        Ajouter aux Contacts
                     </button>
                 </div>
             </div>
         </div>
 
         <div class="instructions">
-            Admin password required to edit • Visitors can only download contact
+            Mot de passe administrateur requis pour modifier • Les visiteurs peuvent uniquement télécharger le contact
         </div>
     </div>
 
@@ -296,21 +296,21 @@
         let photoData = '';
         let isEditMode = false;
         
-        // ADMINISTRATOR PASSWORD - Change this to your own secure password
+        // MOT DE PASSE ADMINISTRATEUR - Changez ceci par votre propre mot de passe sécurisé
         const ADMIN_PASSWORD = 'admin123';
 
         function toggleEditMode() {
-            // If trying to enter edit mode, ask for password
+            // Si on essaie d'entrer en mode édition, demander le mot de passe
             if (!isEditMode) {
-                const password = prompt('Administrator Password:');
-                
+                const password = prompt('Mot de passe administrateur :');
+
                 if (password !== ADMIN_PASSWORD) {
-                    alert('Incorrect password! Only administrators can edit.');
+                    alert('Mot de passe incorrect ! Seuls les administrateurs peuvent modifier.');
                     return;
                 }
             }
-            
-            // Toggle edit mode
+
+            // Basculer le mode édition
             isEditMode = !isEditMode;
             const editables = document.querySelectorAll('.editable');
             editables.forEach(el => {
@@ -321,11 +321,11 @@
                     el.style.borderColor = 'transparent';
                 }
             });
-            
+
             const btn = document.querySelector('.edit-btn');
-            btn.textContent = isEditMode ? '✓ Done' : '✏️ Edit';
+            btn.textContent = isEditMode ? '✓ Terminé' : '✏️ Modifier';
             
-            // Disable photo upload for visitors
+            // Désactiver le téléchargement de photo pour les visiteurs
             const photoContainer = document.querySelector('.photo-container');
             if (isEditMode) {
                 photoContainer.style.cursor = 'pointer';
@@ -362,7 +362,7 @@
             const phone = document.getElementById('phone').textContent;
             const address = document.getElementById('address').textContent;
 
-            // Create vCard content
+            // Créer le contenu vCard
             let vcard = 'BEGIN:VCARD\n';
             vcard += 'VERSION:3.0\n';
             vcard += `FN:${name}\n`;
@@ -371,7 +371,7 @@
             vcard += `TEL:${phone}\n`;
             vcard += `ADR:;;${address};;;;\n`;
             
-            // Add photo if available
+            // Ajouter la photo si disponible
             if (photoData) {
                 const base64Data = photoData.split(',')[1];
                 const photoType = photoData.split(';')[0].split(':')[1].split('/')[1].toUpperCase();
@@ -380,7 +380,7 @@
             
             vcard += 'END:VCARD';
 
-            // Create download link
+            // Créer le lien de téléchargement
             const blob = new Blob([vcard], { type: 'text/vcard' });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
