@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Business Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card-container {
+            perspective: 1000px;
+        }
+
+        .business-card {
+            width: 550px;
+            height: 320px;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                #ffffff 0%, 
+                #e0e0e0 50%, 
+                #ffffff 100%);
+        }
+
+        .card-content {
+            display: flex;
+            height: 100%;
+            gap: 20px;
+        }
+
+        .photo-section {
+            flex-shrink: 0;
+        }
+
+        .photo-container {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-container:hover {
+            transform: scale(1.05);
+            border-color: #e0e0e0;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .info-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .name-title {
+            margin-bottom: 5px;
+        }
+
+        .name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .title {
+            font-size: 16px;
+            color: #999;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #ccc;
+            font-size: 15px;
+        }
+
+        .contact-item svg {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            fill: #ffffff;
+        }
+
+        .add-contact-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            align-self: flex-start;
+        }
+
+        .add-contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .add-contact-btn:active {
+            transform: translateY(0);
+        }
+
+        .add-contact-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: #000;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .edit-mode {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .edit-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .editable {
+            border: 1px dashed transparent;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .editable:focus {
+            outline: none;
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .instructions {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <!-- 
+        ADMINISTRATOR INSTRUCTIONS:
+        To change the password, open this file in a text editor and find the line:
+        const ADMIN_PASSWORD = 'admin123';
+        Replace 'admin123' with your own secure password.
+        -->
+        <div class="business-card">
+            <div class="edit-mode">
+                <button class="edit-btn" onclick="toggleEditMode()">✏️ Edit</button>
+            </div>
+
+            <div class="card-content">
+                <div class="photo-section">
+                    <div class="photo-container" style="cursor: default;">
+                        <div class="photo-placeholder" id="photoPlaceholder">
+                            Click to add photo
+                        </div>
+                        <img id="photoImg" style="display: none;" />
+                    </div>
+                    <input type="file" id="photoUpload" accept="image/*" onchange="handlePhotoUpload(event)">
+                </div>
+
+                <div class="info-section">
+                    <div>
+                        <div class="name-title">
+                            <div class="name editable" contenteditable="false" id="name">John Doe</div>
+                            <div class="title editable" contenteditable="false" id="title">Professional Title</div>
+                        </div>
+
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                </svg>
+                                <span class="editable" contenteditable="false" id="email">email@example.com</span>
+                            </div>
+
+                            <div class="contact-item">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                </svg>
+                                <span class="editable" contenteditable="false" id="phone">+1 (555) 123-4567</span>
+                            </div>
+
+                            <div class="contact-item">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                                <span class="editable" contenteditable="false" id="address">City, Country</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="add-contact-btn" onclick="downloadVCard()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                        </svg>
+                        Add to Contacts
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            Admin password required to edit • Visitors can only download contact
+        </div>
+    </div>
+
+    <script>
+        let photoData = '';
+        let isEditMode = false;
+        
+        // ADMINISTRATOR PASSWORD - Change this to your own secure password
+        const ADMIN_PASSWORD = 'admin123';
+
+        function toggleEditMode() {
+            // If trying to enter edit mode, ask for password
+            if (!isEditMode) {
+                const password = prompt('Administrator Password:');
+                
+                if (password !== ADMIN_PASSWORD) {
+                    alert('Incorrect password! Only administrators can edit.');
+                    return;
+                }
+            }
+            
+            // Toggle edit mode
+            isEditMode = !isEditMode;
+            const editables = document.querySelectorAll('.editable');
+            editables.forEach(el => {
+                el.contentEditable = isEditMode;
+                if (isEditMode) {
+                    el.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                } else {
+                    el.style.borderColor = 'transparent';
+                }
+            });
+            
+            const btn = document.querySelector('.edit-btn');
+            btn.textContent = isEditMode ? '✓ Done' : '✏️ Edit';
+            
+            // Disable photo upload for visitors
+            const photoContainer = document.querySelector('.photo-container');
+            if (isEditMode) {
+                photoContainer.style.cursor = 'pointer';
+                photoContainer.onclick = function() {
+                    document.getElementById('photoUpload').click();
+                };
+            } else {
+                photoContainer.style.cursor = 'default';
+                photoContainer.onclick = null;
+            }
+        }
+
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoData = e.target.result;
+                    const img = document.getElementById('photoImg');
+                    const placeholder = document.getElementById('photoPlaceholder');
+                    
+                    img.src = photoData;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function downloadVCard() {
+            const name = document.getElementById('name').textContent;
+            const title = document.getElementById('title').textContent;
+            const email = document.getElementById('email').textContent;
+            const phone = document.getElementById('phone').textContent;
+            const address = document.getElementById('address').textContent;
+
+            // Create vCard content
+            let vcard = 'BEGIN:VCARD\n';
+            vcard += 'VERSION:3.0\n';
+            vcard += `FN:${name}\n`;
+            vcard += `TITLE:${title}\n`;
+            vcard += `EMAIL:${email}\n`;
+            vcard += `TEL:${phone}\n`;
+            vcard += `ADR:;;${address};;;;\n`;
+            
+            // Add photo if available
+            if (photoData) {
+                const base64Data = photoData.split(',')[1];
+                const photoType = photoData.split(';')[0].split(':')[1].split('/')[1].toUpperCase();
+                vcard += `PHOTO;ENCODING=b;TYPE=${photoType}:${base64Data}\n`;
+            }
+            
+            vcard += 'END:VCARD';
+
+            // Create download link
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${name.replace(/\s+/g, '_')}.vcf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
