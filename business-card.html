@@ -56,6 +56,39 @@
                 #ffffff 100%);
         }
 
+        .lang-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn {
+            background: transparent;
+            color: #999;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000;
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: #fff;
+        }
+
         .card-content {
             display: flex;
             height: 100%;
@@ -93,7 +126,16 @@
             color: #aaa;
             margin-bottom: 8px;
             line-height: 1.5;
+        }
+
+        .position.ar {
             direction: rtl;
+            text-align: right;
+            font-family: 'Traditional Arabic', 'Arial', sans-serif;
+        }
+
+        .position.fr {
+            direction: ltr;
             text-align: left;
         }
 
@@ -149,45 +191,86 @@
             fill: #000;
         }
 
+        .hidden {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
     <div class="card-container">
         <div class="business-card">
+            <div class="lang-toggle">
+                <button class="lang-btn active" onclick="switchLanguage('fr')">FR</button>
+                <button class="lang-btn" onclick="switchLanguage('ar')">AR</button>
+            </div>
+
             <div class="card-content">
                 <div class="info-section">
                     <div>
                         <div class="name-title">
-                            <div class="name" id="name">Sidi abderrahmane El badraoui</div>
+                            <!-- French Name -->
+                            <div class="name lang-fr" id="name-fr">Sidi abderrahmane El badraoui</div>
+                            <!-- Arabic Name -->
+                            <div class="name lang-ar hidden" id="name-ar" style="direction: rtl; text-align: right;">سيدي عبد الرحمان البدراوي</div>
+                            
                             <div class="title" id="title">
-                                <div class="position">Directeur de publication - مدير النشر</div>
-                                <div class="position">Rédacteur en chef - رئيس التحرير</div>
-                                <div class="position">جريدة ملاحظون</div>
-                                <div class="position">Vice président à l'union des journalistes marocains - نائب الرئيس لإتحاد الصحفيين المغاربة</div>
-                                <div class="position">Chargée des relations international et de communication à l'instance national des droits de l'homme - الهيئة الوطنية لحقوق الإنسان</div>
+                                <!-- French Content -->
+                                <div class="position fr lang-fr">Directeur de publication et Rédacteur en chef - Journal Almolahid</div>
+                                <div class="position fr lang-fr">Vice président à l'union des journalistes marocains</div>
+                                <div class="position fr lang-fr">Chargé des relations internationales et de communication à l'instance nationale des droits de l'homme</div>
+                                
+                                <!-- Arabic Content -->
+                                <div class="position ar lang-ar hidden">مدير النشر و رئيس التحرير - جريدة الملاحظ</div>
+                                <div class="position ar lang-ar hidden">نائب الرئيس لاتحاد الصحفيين المغاربة</div>
+                                <div class="position ar lang-ar hidden">مسؤول العلاقات الدولية والاتصال - الهيئة الوطنية لحقوق الإنسان</div>
                             </div>
                         </div>
 
                         <div class="contact-info">
-                            <div class="contact-item">
+                            <div class="contact-item lang-fr">
                                 <svg viewBox="0 0 24 24">
                                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                                 </svg>
+                                <span>Email: </span>
                                 <span id="email">a.elbadraoui@outlook.com</span>
                             </div>
-
-                            <div class="contact-item">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            <div class="contact-item lang-ar hidden" style="direction: rtl; justify-content: flex-end;">
+                                <span id="email-ar" style="margin-left: 10px;">a.elbadraoui@outlook.com</span>
+                                <span style="margin-left: 10px;">البريد الإلكتروني</span>
+                                <svg viewBox="0 0 24 24" style="margin-left: 0; margin-right: 0;">
+                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                                 </svg>
-                                <span id="phone">+212 6 61 30 90 30</span>
                             </div>
 
-                            <div class="contact-item">
+                            <div class="contact-item lang-fr">
                                 <svg viewBox="0 0 24 24">
                                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                                 </svg>
+                                <span>Mobile: </span>
+                                <span id="phone">+212 6 61 30 90 30</span>
+                            </div>
+                            <div class="contact-item lang-ar hidden" style="direction: rtl; justify-content: flex-end;">
+                                <span id="phone-ar" style="margin-left: 10px;">+212 6 61 30 90 30</span>
+                                <span style="margin-left: 10px;">الهاتف المحمول</span>
+                                <svg viewBox="0 0 24 24" style="margin-left: 0; margin-right: 0;">
+                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                </svg>
+                            </div>
+
+                            <div class="contact-item lang-fr">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                </svg>
+                                <span>Tél: </span>
                                 <span id="phone2">0537262619</span>
+                            </div>
+                            <div class="contact-item lang-ar hidden" style="direction: rtl; justify-content: flex-end;">
+                                <span id="phone2-ar" style="margin-left: 10px;">0537262619</span>
+                                <span style="margin-left: 10px;">الهاتف</span>
+                                <svg viewBox="0 0 24 24" style="margin-left: 0; margin-right: 0;">
+                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                </svg>
                             </div>
                         </div>
                     </div>
@@ -196,7 +279,8 @@
                         <svg viewBox="0 0 24 24">
                             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                         </svg>
-                        Add to Contacts
+                        <span class="lang-fr">Ajouter aux contacts</span>
+                        <span class="lang-ar hidden">أضف إلى جهات الاتصال</span>
                     </button>
                 </div>
             </div>
@@ -204,13 +288,42 @@
     </div>
 
     <script>
+        let currentLang = 'fr';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Hide/show content based on language
+            if (lang === 'fr') {
+                document.querySelectorAll('.lang-fr').forEach(el => el.classList.remove('hidden'));
+                document.querySelectorAll('.lang-ar').forEach(el => el.classList.add('hidden'));
+            } else {
+                document.querySelectorAll('.lang-ar').forEach(el => el.classList.remove('hidden'));
+                document.querySelectorAll('.lang-fr').forEach(el => el.classList.add('hidden'));
+            }
+        }
 
         function downloadVCard() {
-            const name = document.getElementById('name').textContent;
-            const title = document.getElementById('title').textContent;
             const email = document.getElementById('email').textContent;
             const phone = document.getElementById('phone').textContent;
             const phone2 = document.getElementById('phone2').textContent;
+
+            // Name and title based on current language
+            let name = '';
+            let title = '';
+            if (currentLang === 'fr') {
+                name = document.getElementById('name-fr').textContent;
+                title = 'Directeur de publication et Rédacteur en chef - Journal Almolahid, Vice président à l\'union des journalistes marocains';
+            } else {
+                name = document.getElementById('name-ar').textContent;
+                title = 'مدير النشر و رئيس التحرير - جريدة الملاحظ، نائب الرئيس لاتحاد الصحفيين المغاربة';
+            }
 
             // Create vCard content
             let vcard = 'BEGIN:VCARD\n';
