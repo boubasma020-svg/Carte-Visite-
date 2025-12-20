@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte de Visite Professionnelle</title>
+    <title>Professional Business Card</title>
     <style>
         * {
             margin: 0;
@@ -26,9 +26,9 @@
         }
 
         .business-card {
-            width: 100%;
-            max-width: 550px;
-            min-height: 320px;
+            width: 650px;
+            height: auto;
+            min-height: 400px;
             background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             border-radius: 16px;
             padding: 40px;
@@ -58,114 +58,7 @@
 
         .card-content {
             display: flex;
-            flex-direction: row;
             height: 100%;
-            gap: 20px;
-        }
-
-        /* Responsive Design pour Mobile */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .business-card {
-                padding: 25px;
-                min-height: auto;
-            }
-
-            .card-content {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-            }
-
-            .photo-section {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-            }
-
-            .info-section {
-                width: 100%;
-                text-align: center;
-            }
-
-            .name {
-                font-size: 24px;
-            }
-
-            .title {
-                font-size: 14px;
-            }
-
-            .contact-item {
-                justify-content: center;
-                font-size: 14px;
-            }
-
-            .add-contact-btn {
-                align-self: center;
-                width: 100%;
-                max-width: 250px;
-            }
-
-            .instructions {
-                font-size: 12px;
-                padding: 0 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .business-card {
-                padding: 20px;
-            }
-
-            .name {
-                font-size: 20px;
-            }
-
-            .photo-container {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
-        .photo-section {
-            flex-shrink: 0;
-        }
-
-        .photo-container {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #ffffff;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-            background: #2a2a2a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .photo-container:hover {
-            transform: scale(1.05);
-            border-color: #e0e0e0;
-        }
-
-        .photo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .photo-placeholder {
-            color: #666;
-            font-size: 12px;
-            text-align: center;
-            padding: 10px;
         }
 
         .info-section {
@@ -188,10 +81,20 @@
         }
 
         .title {
-            font-size: 16px;
+            font-size: 14px;
             color: #999;
             font-weight: 400;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .position {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 8px;
+            line-height: 1.5;
+            direction: rtl;
+            text-align: left;
         }
 
         .contact-info {
@@ -246,91 +149,23 @@
             fill: #000;
         }
 
-        input[type="file"] {
-            display: none;
-        }
-
-        .edit-mode {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-
-        .edit-btn {
-            background: transparent;
-            border: none;
-            color: #fff;
-            padding: 8px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-        }
-
-        .edit-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.1);
-        }
-
-        .edit-btn:active {
-            transform: scale(0.95);
-        }
-
-        .editable {
-            border: 1px dashed transparent;
-            padding: 2px 4px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .editable:focus {
-            outline: none;
-            border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .instructions {
-            text-align: center;
-            color: #999;
-            font-size: 14px;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
     <div class="card-container">
-        <!--
-        INSTRUCTIONS ADMINISTRATEUR :
-        Pour changer le mot de passe, ouvrez ce fichier dans un éditeur de texte et trouvez la ligne :
-        const ADMIN_PASSWORD = 'admin123';
-        Remplacez 'admin123' par votre propre mot de passe sécurisé.
-        -->
         <div class="business-card">
-            <div class="edit-mode">
-                <button class="edit-btn" onclick="toggleEditMode()">✏️</button>
-            </div>
-
             <div class="card-content">
-                <div class="photo-section">
-                    <div class="photo-container" style="cursor: default;">
-                        <div class="photo-placeholder" id="photoPlaceholder">
-                            Cliquez pour ajouter une photo
-                        </div>
-                        <img id="photoImg" style="display: none;" />
-                    </div>
-                    <input type="file" id="photoUpload" accept="image/*" onchange="handlePhotoUpload(event)">
-                </div>
-
                 <div class="info-section">
                     <div>
                         <div class="name-title">
-                            <div class="name editable" contenteditable="false" id="name">Nom Prénom</div>
-                            <div class="title editable" contenteditable="false" id="title">Titre Professionnel</div>
+                            <div class="name" id="name">Sidi abderrahmane El badraoui</div>
+                            <div class="title" id="title">
+                                <div class="position">Directeur de publication - مدير النشر</div>
+                                <div class="position">Rédacteur en chef - رئيس التحرير</div>
+                                <div class="position">جريدة ملاحظون</div>
+                                <div class="position">Vice président à l'union des journalistes marocains - نائب الرئيس لإتحاد الصحفيين المغاربة</div>
+                                <div class="position">Chargée des relations international et de communication à l'instance national des droits de l'homme - الهيئة الوطنية لحقوق الإنسان</div>
+                            </div>
                         </div>
 
                         <div class="contact-info">
@@ -338,21 +173,21 @@
                                 <svg viewBox="0 0 24 24">
                                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                                 </svg>
-                                <span class="editable" contenteditable="false" id="email">email@example.com</span>
+                                <span id="email">a.elbadraoui@outlook.com</span>
                             </div>
 
                             <div class="contact-item">
                                 <svg viewBox="0 0 24 24">
                                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                                 </svg>
-                                <span class="editable" contenteditable="false" id="phone">+1 (555) 123-4567</span>
+                                <span id="phone">+212 6 61 30 90 30</span>
                             </div>
 
                             <div class="contact-item">
                                 <svg viewBox="0 0 24 24">
-                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                                 </svg>
-                                <span class="editable" contenteditable="false" id="address">Ville, Pays</span>
+                                <span id="phone2">0537262619</span>
                             </div>
                         </div>
                     </div>
@@ -361,118 +196,33 @@
                         <svg viewBox="0 0 24 24">
                             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                         </svg>
-                        Ajouter aux Contacts
+                        Add to Contacts
                     </button>
                 </div>
             </div>
         </div>
-
-        <div class="instructions">
-            Mot de passe administrateur requis pour modifier • Les visiteurs peuvent uniquement télécharger le contact
-        </div>
     </div>
 
     <script>
-        let photoData = '';
-        let isEditMode = false;
-
-        // MOT DE PASSE ADMINISTRATEUR - Changez ceci par votre propre mot de passe sécurisé
-        const ADMIN_PASSWORD = 'admin123';
-
-        // Charger les données sauvegardées au démarrage
-        window.addEventListener('DOMContentLoaded', function() {
-            loadSavedData();
-        });
-
-        function toggleEditMode() {
-            // Si on essaie d'entrer en mode édition, demander le mot de passe
-            if (!isEditMode) {
-                const password = prompt('Mot de passe administrateur :');
-
-                if (password !== ADMIN_PASSWORD) {
-                    alert('Mot de passe incorrect ! Seuls les administrateurs peuvent modifier.');
-                    return;
-                }
-            }
-
-            // Basculer le mode édition
-            isEditMode = !isEditMode;
-            const editables = document.querySelectorAll('.editable');
-            editables.forEach(el => {
-                el.contentEditable = isEditMode;
-                if (isEditMode) {
-                    el.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                } else {
-                    el.style.borderColor = 'transparent';
-                }
-            });
-
-            const btn = document.querySelector('.edit-btn');
-            btn.textContent = isEditMode ? '✓' : '✏️';
-
-            // Désactiver le téléchargement de photo pour les visiteurs
-            const photoContainer = document.querySelector('.photo-container');
-            if (isEditMode) {
-                photoContainer.style.cursor = 'pointer';
-                photoContainer.onclick = function() {
-                    document.getElementById('photoUpload').click();
-                };
-            } else {
-                photoContainer.style.cursor = 'default';
-                photoContainer.onclick = null;
-                // Sauvegarder les données quand on quitte le mode édition
-                saveData();
-            }
-        }
-
-        function handlePhotoUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    photoData = e.target.result;
-                    const img = document.getElementById('photoImg');
-                    const placeholder = document.getElementById('photoPlaceholder');
-
-                    img.src = photoData;
-                    img.style.display = 'block';
-                    placeholder.style.display = 'none';
-
-                    // Sauvegarder automatiquement après le téléchargement de la photo
-                    if (isEditMode) {
-                        saveData();
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        }
 
         function downloadVCard() {
             const name = document.getElementById('name').textContent;
             const title = document.getElementById('title').textContent;
             const email = document.getElementById('email').textContent;
             const phone = document.getElementById('phone').textContent;
-            const address = document.getElementById('address').textContent;
+            const phone2 = document.getElementById('phone2').textContent;
 
-            // Créer le contenu vCard
+            // Create vCard content
             let vcard = 'BEGIN:VCARD\n';
             vcard += 'VERSION:3.0\n';
             vcard += `FN:${name}\n`;
             vcard += `TITLE:${title}\n`;
             vcard += `EMAIL:${email}\n`;
-            vcard += `TEL:${phone}\n`;
-            vcard += `ADR:;;${address};;;;\n`;
-            
-            // Ajouter la photo si disponible
-            if (photoData) {
-                const base64Data = photoData.split(',')[1];
-                const photoType = photoData.split(';')[0].split(':')[1].split('/')[1].toUpperCase();
-                vcard += `PHOTO;ENCODING=b;TYPE=${photoType}:${base64Data}\n`;
-            }
-            
+            vcard += `TEL;TYPE=CELL:${phone}\n`;
+            vcard += `TEL;TYPE=WORK:${phone2}\n`;
             vcard += 'END:VCARD';
 
-            // Créer le lien de téléchargement
+            // Create download link
             const blob = new Blob([vcard], { type: 'text/vcard' });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -483,58 +233,6 @@
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
         }
-
-        // Fonction pour sauvegarder les données dans localStorage
-        function saveData() {
-            const data = {
-                name: document.getElementById('name').textContent,
-                title: document.getElementById('title').textContent,
-                email: document.getElementById('email').textContent,
-                phone: document.getElementById('phone').textContent,
-                address: document.getElementById('address').textContent,
-                photo: photoData
-            };
-
-            try {
-                localStorage.setItem('businessCardData', JSON.stringify(data));
-                console.log('Données sauvegardées avec succès');
-            } catch (e) {
-                console.error('Erreur lors de la sauvegarde:', e);
-                alert('Erreur lors de la sauvegarde des données');
-            }
-        }
-
-        // Fonction pour charger les données depuis localStorage
-        function loadSavedData() {
-            try {
-                const savedData = localStorage.getItem('businessCardData');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-
-                    // Charger les informations textuelles
-                    if (data.name) document.getElementById('name').textContent = data.name;
-                    if (data.title) document.getElementById('title').textContent = data.title;
-                    if (data.email) document.getElementById('email').textContent = data.email;
-                    if (data.phone) document.getElementById('phone').textContent = data.phone;
-                    if (data.address) document.getElementById('address').textContent = data.address;
-
-                    // Charger la photo si elle existe
-                    if (data.photo) {
-                        photoData = data.photo;
-                        const img = document.getElementById('photoImg');
-                        const placeholder = document.getElementById('photoPlaceholder');
-                        img.src = photoData;
-                        img.style.display = 'block';
-                        placeholder.style.display = 'none';
-                    }
-
-                    console.log('Données chargées avec succès');
-                }
-            } catch (e) {
-                console.error('Erreur lors du chargement:', e);
-            }
-        }
-
     </script>
 </body>
 </html>
